@@ -22,9 +22,11 @@ export function buildWebpack(options: BuildOptions) {
             clean: true, // Очистит/удалит все предыдущие файлы сборки
         },
         plugins: buildPlugins(options),
-        module: buildLoaders(options), // Подключаем TypeScript и расширения ts, tsx
+        module: {
+            rules: buildLoaders(options),
+        }, // Подключаем TypeScript и расширения ts, tsx
         resolve:  buildResolvers(options), // Расширения, которые необходимо обработать
         devtool: isDev && 'inline-source-map' ,
-        devServer: buildDevServer(options), // DevServer для отображения изменений без перезагрузки приложения
+        devServer: isDev ?  buildDevServer(options) : undefined, // DevServer для отображения изменений без перезагрузки приложения
     }
 }
