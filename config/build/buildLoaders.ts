@@ -1,8 +1,37 @@
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import {BuildOptions} from "./types/types";
 import {ModuleOptions} from 'webpack'
+
 export function buildLoaders({mode}: BuildOptions): ModuleOptions['rules'] {
     const isDev = mode === 'development';
+
+    const svgrLoader = {
+        test: /\.svg$/i,
+        use: [
+            {
+                loader: '@svgr/webpack',
+                options: {
+                    icon: true,
+                    svgoConfig: {
+                        plugins: [
+                            {
+                                name: 'convertColors',
+                                params: {
+                                    currentColor: true,
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+    }
+
+    const assetsLoader = {
+        test: /\.(png|jpe?g|gif|eot|ttf|woff|woff2)$/i,
+        // More information here https://webpack.js.org/guides/asset-modules/
+        type: "asset/resource",
+    };
 
     const cssLoaderWithModules = {
         loader: "css-loader",
@@ -31,5 +60,6 @@ export function buildLoaders({mode}: BuildOptions): ModuleOptions['rules'] {
         exclude: /node_modules/,
     };
 
-    return  [scssLoader, tsLoader];
+
+    return [assetsLoader, svgrLoader, scssLoader, tsLoader];
 }

@@ -5,8 +5,8 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import {AboutPage} from "./pages/about";
-import {ShopPage} from "./pages/shop";
+import {AboutPage} from "@/pages/about";
+import {ShopPage} from "@/pages/shop";
 import {Suspense} from "react";
 
 const root = document.getElementById('root');

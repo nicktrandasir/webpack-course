@@ -1,15 +1,19 @@
 import MiniCssExtractPlugin, {Configuration} from "mini-css-extract-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import webpack from "webpack";
+import webpack, { DefinePlugin } from "webpack";
 import {BuildOptions} from "./types/types";
 const WebpackBundleAnalyzer = require("webpack-bundle-analyzer")
     .BundleAnalyzerPlugin;
-export function buildPlugins({mode, paths, analyzer}: BuildOptions): Configuration['plugins'] {
+export function buildPlugins({mode, paths, analyzer, platform}: BuildOptions): Configuration['plugins'] {
     const isDev = mode === 'development'
     const isProd = mode === 'production'
 
     const plugins: Configuration['plugins'] = [  // Плагины
         new HtmlWebpackPlugin({template: paths.html}), // Собирает html-файл атоматически подставляя js-файл билда в тег scrypt из html
+        new DefinePlugin({
+            __PLATFORM__: JSON.stringify(platform),
+            __EMV__: JSON.stringify(mode)
+        })
     ];
 
     if (isDev) { // Плагины для дева
