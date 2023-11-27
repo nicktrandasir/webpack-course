@@ -5,15 +5,16 @@ import BitcoinPng from '@/assets/bitcoin.png'
 import BitcoinJpeg from '@/assets/bitcoin.jpg'
 import BitcoinSvg from '@/assets/bitcoin.svg'
 
-function fm() {
-    throw new Error()
-}
+// function fm() {
+//     throw new Error()
+// }
 
 
 export const App: FC = () => {
     const [count, setCount] = useState(0)
 
-    fm()
+    // Пример ошибки и ее отслеживание через консоль браузера
+    // fm()
 
     const onCLick = () => setCount(prev => prev + 1)
 
