@@ -1,9 +1,10 @@
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import {BuildOptions} from "./types/types";
 import {ModuleOptions} from 'webpack'
+import {buildBabelLoader} from "../babel/buildBabelLoader";
 
-export function buildLoaders({mode}: BuildOptions): ModuleOptions['rules'] {
-    const isDev = mode === 'development';
+export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
+    const isDev = options.mode === 'development';
 
     const svgrLoader = {
         test: /\.svg$/i,
@@ -54,12 +55,29 @@ export function buildLoaders({mode}: BuildOptions): ModuleOptions['rules'] {
         ],
     }
 
-    const tsLoader = {
-        test: /\.tsx?$/, // Регулярка для расширений лоудера и также понимает JSX
-        use: 'ts-loader', // TS-лоудер для обработки файлов
-        exclude: /node_modules/,
-    };
+    // const tsLoader = {
+    //     test: /\.tsx?$/, // Регулярка для расширений лоудера и также понимает JSX
+    //     use: 'ts-loader', // TS-лоудер для обработки файлов
+    //     exclude: /node_modules/,
+    // };
 
+    // const tsLoader = {
+    //     test: /\.tsx?$/, // Регулярка для расширений лоудера и также понимает JSX
+    //     use: [
+    //         {
+    //             loader: require.resolve('ts-loader'),
+    //             options: {
+    //                 getCustomTransformers: () => ({
+    //                     before: [isDev && ReactRefreshTypeScript()].filter(Boolean),
+    //                 }),
+    //                 transpileOnly: isDev,
+    //             },
+    //         },
+    //     ],
+    //     exclude: /node_modules/,
+    // };
+    const babelLoader = buildBabelLoader(options)
 
-    return [assetsLoader, svgrLoader, scssLoader, tsLoader];
+    // Очередность лоудеров важна!
+    return [assetsLoader, svgrLoader, scssLoader, babelLoader];
 }

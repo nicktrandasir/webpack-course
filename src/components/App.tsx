@@ -5,15 +5,20 @@ import BitcoinPng from '@/assets/bitcoin.png'
 import BitcoinJpeg from '@/assets/bitcoin.jpg'
 import BitcoinSvg from '@/assets/bitcoin.svg'
 
-type App = {}
+function fm() {
+    throw new Error()
+}
 
-export const App: FC<App> = () => {
+
+export const App: FC = () => {
     const [count, setCount] = useState(0)
+
+    fm()
 
     const onCLick = () => setCount(prev => prev + 1)
 
     if (__PLATFORM__ === 'desktop') {  // Легко проверить собрав билд. Строка "Is mobile platform!" будет отсутствовать
-        return <div>Is desktop platform!</div>
+        return <div>Is desktop patform!</div>
     }
     if (__PLATFORM__ === 'mobile') { // И тут наоборот
         return <div>Is mobile platform!</div>
@@ -22,9 +27,8 @@ export const App: FC<App> = () => {
         return <div>Is development!</div>
     }
 
-
     return (
-        <div className={classes.container}>
+        <div className={classes.container} data-testid={'uniqId'}>
             <Link to={'/'}> Main page!</Link>
             <Link to={'/about'}> About page!</Link>
             <Link to={'/shop'}> Shop page!</Link>
@@ -42,7 +46,7 @@ export const App: FC<App> = () => {
             <img src={BitcoinJpeg} alt=""/>
             {/*<img src={BitcoinSvg} alt=""/>*/}
 
-            <BitcoinSvg color={'red'} width='100' height='100' />
+            <BitcoinSvg color={'red'} width='100' height='100'/>
         </div>
 
     );

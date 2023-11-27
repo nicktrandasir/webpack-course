@@ -26,7 +26,7 @@ export function buildWebpack(options: BuildOptions) {
             rules: buildLoaders(options),
         }, // Подключаем TypeScript и расширения ts, tsx
         resolve:  buildResolvers(options), // Расширения, которые необходимо обработать
-        devtool: isDev && 'inline-source-map' ,
+        devtool: isDev ? 'eval-cheap-module-source-map' : 'source-map' ,
         devServer: isDev ?  buildDevServer(options) : undefined, // DevServer для отображения изменений без перезагрузки приложения
     }
 }
